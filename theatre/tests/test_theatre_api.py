@@ -48,7 +48,11 @@ def sample_actor(**params):
 
 
 def sample_performance(**params):
-    theatre_hall = TheatreHall.objects.create(name="Blue", rows=20, seats_in_row=20)
+    theatre_hall = TheatreHall.objects.create(
+        name="Blue",
+        rows=20,
+        seats_in_row=20
+    )
 
     defaults = {
         "show_time": "2024-12-12 14:00:00",
@@ -169,7 +173,10 @@ class PlayViewSetTest(TestCase):
         self.genre2 = Genre.objects.create(name="Comedy")
 
         self.actor1 = Actor.objects.create(first_name="John", last_name="Doe")
-        self.actor2 = Actor.objects.create(first_name="Jane", last_name="Smith")
+        self.actor2 = Actor.objects.create(
+            first_name="Jane",
+            last_name="Smith"
+        )
 
         self.play1 = Play.objects.create(
             title="Play 1", description="Description 1"
@@ -208,7 +215,10 @@ class PlayViewSetTest(TestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["title"], "Play 1")
 
-        response = self.client.get(self.list_url, {"genres": str(self.genre1.id)})
+        response = self.client.get(
+            self.list_url,
+            {"genres": str(self.genre1.id)}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["title"], "Play 1")
@@ -236,7 +246,10 @@ class PlayViewSetTest(TestCase):
 
     def test_filter_plays_by_actor(self):
         self.client.force_authenticate(user=self.regular_user)
-        response = self.client.get(self.list_url, {"actors": str(self.actor1.id)})
+        response = self.client.get(
+            self.list_url,
+            {"actors": str(self.actor1.id)}
+        )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["title"], "Play 1")
