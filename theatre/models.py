@@ -43,7 +43,7 @@ def play_image_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
 
-    return os.path.join("uploads/plays/", filename)
+    return os.path.join("uploads", "plays", filename)
 
 
 class Play(models.Model):

@@ -125,7 +125,7 @@ class PlayViewSet(
         play = self.get_object()
         serializer = self.get_serializer(play, data=request.data)
 
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -240,4 +240,5 @@ class ReservationViewSet(
         return ReservationSerializer
 
     def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user)
